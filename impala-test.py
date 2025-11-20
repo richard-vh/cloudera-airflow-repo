@@ -12,7 +12,7 @@ catchup=False,
 
   execute_query = SQLExecuteQueryOperator(
     task_id="execute_query",
-    conn_id="impala-test",
+    conn_id="rvh-impala",
     sql=f"SHOW TABLES",
     split_statements=True,
     return_last=False,
