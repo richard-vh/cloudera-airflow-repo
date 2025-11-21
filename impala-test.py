@@ -6,7 +6,7 @@ from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 with DAG(
     dag_id="imp_dag",
     start_date=datetime(2025, 2, 9),
-    schedule=timedelta(days=1),
+    schedule="*/5 * * * *",
     catchup=False,
 ) as dag:
     # 🚨 This task definition was missing indentation.
