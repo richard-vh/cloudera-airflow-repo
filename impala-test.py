@@ -2,8 +2,6 @@ import logging
 from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
-import pkg_resources
-import importlib.metadata
 
 with DAG(
     dag_id="imp_dag",
@@ -18,15 +16,9 @@ with DAG(
         sql=f"SHOW TABLES",
         split_statements=True,
         return_last=False,
+        show_return_value_in_logs=True,
     )
 
-    # 🚨 This code was also missing indentation.
-    # Note: Airflow will execute this code when parsing the DAG file, not as a task.
-    installed_packages_list = sorted(["%s==%s" % (d.metadata['Name'], d.version) 
-                                      for d in importlib.metadata.distributions()])
-
-    # The print statement will run during the DAG parsing process.
-    print(installed_packages_list)
 
     # 🚨 This task dependency definition was also missing indentation.
     execute_query
