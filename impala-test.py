@@ -3,7 +3,7 @@ from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 import pkg_resources
-
+import importlib.metadata
 with DAG(
     dag_id="imp_dag",
     start_date=datetime(2025, 2, 9),
@@ -19,9 +19,9 @@ execute_query = SQLExecuteQueryOperator(
     return_last=False,
 )
 
-installed_packages = pkg_resources.working_set
-installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
-for i in installed_packages])
-    print(installed_packages_list)
+installed_packages_list = sorted(["%s==%s" % (d.metadata['Name'], d.version) 
+                                  for d in importlib.metadata.distributions()])
+
+print(installed_packages_list)
 
 execute_query
